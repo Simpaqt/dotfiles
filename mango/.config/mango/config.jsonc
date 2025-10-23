@@ -8,6 +8,7 @@
   ],
   "modules-right": [
     "custom/sep",
+    "custom/pavucontrol",
     "battery",
     "custom/sep",
     "network",
@@ -22,7 +23,6 @@
     "custom/sep",
     "tray"
   ],
-
   "clock": {
     "format-alt": "{:%Y-%m-%d}"
   },
@@ -48,7 +48,13 @@
     "format-plugged": "{capacity}% ",
     "format-alt": "Bat {capacity}%",
     "format-time": "{H}:{M}",
-    "format-icons": ["", "", "", "", ""]
+    "format-icons": [
+      "",
+      "",
+      "",
+      "",
+      ""
+    ]
   },
   "network": {
     "format": "Online",
@@ -72,5 +78,11 @@
   "custom/sep": {
     "format": "|",
     "interval": 0
+  },
+  "custom/pavucontrol": {
+    "format": "🔊",
+    "on-click": "pavucontrol",
+    "tooltip": true,
+    "tooltip-format": "Volume Control"
   }
 }

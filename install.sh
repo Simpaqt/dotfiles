@@ -59,14 +59,14 @@ sudo pacman -S --needed --noconfirm \
   starship \
   yazi \
   nix \
-  neovim
+  neovim \
+  stow
 
 # Install packages from AUR
 print_status "Installing AUR packages..."
 yay -S --needed --noconfirm \
   wmenu \
-  ttf-jetbrains-mono-nerd \
-  mangowc-git
+  ttf-jetbrains-mono-nerd
 
 # Install Wayland screensharing dependencies
 print_status "Installing Wayland screensharing dependencies..."
@@ -99,27 +99,22 @@ if [ -n "$DOTFILES_REPO" ]; then
     git clone "$DOTFILES_REPO" "$DOTFILES_DIR"
   fi
 
-  # Backup existing config
-  if [ -d "$HOME/.config" ]; then
-    print_status "Backing up existing .config to .config.backup..."
-    cp -r "$HOME/.config" "$HOME/.config.backup.$(date +%Y%m%d_%H%M%S)"
-  fi
+  # Use stow to symlink dotfiles
+  print_status "Using GNU Stow to symlink dotfiles..."
+  cd "$DOTFILES_DIR"
 
-  # Create .config if it doesn't exist
-  mkdir -p "$HOME/.config"
+  # Stow all directories in the dotfiles repo
+  # This assumes your dotfiles are organized in stow-compatible structure
+  # e.g., dotfiles/nvim/.config/nvim/, dotfiles/fish/.config/fish/, etc.
+  for dir in */; do
+    if [ -d "$dir" ]; then
+      package="${dir%/}"
+      print_status "Stowing $package..."
+      stow -v -t "$HOME" "$package" 2>&1 || print_warning "Could not stow $package (may already exist)"
+    fi
+  done
 
-  # Copy dotfiles to .config
-  print_status "Copying dotfiles to ~/.config/..."
-  if [ -d "$DOTFILES_DIR/.config" ]; then
-    cp -r "$DOTFILES_DIR/.config/"* "$HOME/.config/"
-  elif [ -d "$DOTFILES_DIR/config" ]; then
-    cp -r "$DOTFILES_DIR/config/"* "$HOME/.config/"
-  else
-    # If dotfiles are in root of repo
-    cp -r "$DOTFILES_DIR/"* "$HOME/.config/"
-  fi
-
-  print_status "Dotfiles copied successfully!"
+  print_status "Dotfiles symlinked successfully!"
 else
   print_warning "Skipping dotfiles setup"
 fi
@@ -143,9 +138,10 @@ print_status "Installation complete!"
 echo ""
 print_status "Installed packages:"
 echo "  - git, github-cli, fish, eza, zoxide, starship"
-echo "  - yazi, nix, neovim, wmenu"
+echo "  - yazi, nix, neovim, wmenu, stow"
 echo "  - JetBrains Mono Nerd Font"
 echo "  - Wayland screensharing: pipewire, xdg-desktop-portal, grim, slurp"
 echo ""
+print_warning "Dotfiles are symlinked using GNU Stow - changes will reflect in ~/dotfiles/"
 print_warning "Please log out and log back in for all changes to take effect"
 print_warning "For screensharing to work properly, ensure your compositor supports wlr-screencopy protocol"
