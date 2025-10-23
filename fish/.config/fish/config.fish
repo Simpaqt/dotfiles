@@ -63,6 +63,7 @@ alias pacsearch="pacman -Ss"
 alias pacinstall="sudo pacman -S"
 alias pacremove="sudo pacman -R"
 alias pacclean="sudo pacman -Sc"
+alias weather="curl wttr.in"
 
 # Fish colors (Dracula theme)
 set -U fish_color_normal f8f8f2
@@ -136,6 +137,6 @@ fish_add_path /home/simpa/.opencode/bin
 # pnpm
 set -gx PNPM_HOME "/home/simpa/.local/share/pnpm"
 if not string match -q -- $PNPM_HOME $PATH
-  set -gx PATH "$PNPM_HOME" $PATH
+    set -gx PATH "$PNPM_HOME" $PATH
 end
 # pnpm end
