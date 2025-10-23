@@ -78,6 +78,25 @@ yay -S --needed --noconfirm \
   luarocks \
   fzf \ 
 
+yay -S --needed --noconfirm \
+  tmux
+
+# Install/Update tmux plugin manager
+print_status "Setting up tmux plugin manager..."
+TPM_DIR="$HOME/.tmux/plugins/tpm"
+
+if [ -d "$TPM_DIR" ]; then
+  print_warning "TPM already exists. Pulling latest changes..."
+  cd "$TPM_DIR"
+  git pull
+  cd ~
+else
+  print_status "Installing tmux plugin manager..."
+  git clone https://github.com/tmux-plugins/tpm "$TPM_DIR"
+fi
+
+print_status "TPM setup complete!"
+
 # Install Wayland screensharing dependencies
 print_status "Installing Wayland screensharing dependencies..."
 sudo pacman -S --needed --noconfirm \
