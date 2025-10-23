@@ -22,7 +22,7 @@
 confirm-close-surface = false
 window-decoration = false
 window-vsync = true
-font-family = "JetBrainsMono Nerd Font"
+font-family = JetBrainsMono Nerd Font Mono
 font-size = 14
 # window-padding-x = 2
 shell-integration = fish
