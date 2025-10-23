@@ -62,7 +62,8 @@ sudo pacman -S --needed --noconfirm \
   neovim \
   mpv \
   stow \
-  noto-fonts-cjk
+  noto-fonts-cjk \
+  bat
 
 # Install packages from AUR
 print_status "Installing AUR packages..."
@@ -75,7 +76,7 @@ yay -S --needed --noconfirm \
   fd \
   ripgrep \
   luarocks \
-  fzf
+  fzf \ 
 
 # Install Wayland screensharing dependencies
 print_status "Installing Wayland screensharing dependencies..."
@@ -88,8 +89,19 @@ sudo pacman -S --needed --noconfirm \
   grim \
   slurp
 
-# Additional useful Wayland screensharing tools
-print_status "Screensharing dependencies installed!"
+print_status "Configuring xdg-desktop-portal..."
+mkdir -p "$HOME/.config/xdg-desktop-portal"
+cat >"$HOME/.config/xdg-desktop-portal/portals.conf" <<EOF
+[preferred]
+default=gtk
+org.freedesktop.impl.portal.ScreenCast=wlr
+org.freedesktop.impl.portal.Screenshot=wlr
+EOF
+
+print_status "Importing environment variables for Wayland..."
+systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
+
+print_status "Screensharing configured successfully!"
 
 # Clone or update dotfiles
 print_status "Setting up dotfiles..."
@@ -112,9 +124,6 @@ if [ -n "$DOTFILES_REPO" ]; then
   print_status "Using GNU Stow to symlink dotfiles..."
   cd "$DOTFILES_DIR"
 
-  # Stow all directories in the dotfiles repo
-  # This assumes your dotfiles are organized in stow-compatible structure
-  # e.g., dotfiles/nvim/.config/nvim/, dotfiles/fish/.config/fish/, etc.
   for dir in */; do
     if [ -d "$dir" ]; then
       package="${dir%/}"
@@ -153,4 +162,3 @@ echo "  - Wayland screensharing: pipewire, xdg-desktop-portal, grim, slurp"
 echo ""
 print_warning "Dotfiles are symlinked using GNU Stow - changes will reflect in ~/dotfiles/"
 print_warning "Please log out and log back in for all changes to take effect"
-print_warning "For screensharing to work properly, ensure your compositor supports wlr-screencopy protocol"
