@@ -60,14 +60,22 @@ sudo pacman -S --needed --noconfirm \
   yazi \
   nix \
   neovim \
-  stow
+  mpv \
+  stow \
+  noto-fonts-cjk
 
 # Install packages from AUR
 print_status "Installing AUR packages..."
 yay -S --needed --noconfirm \
   wmenu \
   ttf-jetbrains-mono-nerd \
-  mangowc-git
+  mangowc-git \
+  ghostty \
+  nodejs \
+  fd \
+  ripgrep \
+  luarocks \
+  fzf
 
 # Install Wayland screensharing dependencies
 print_status "Installing Wayland screensharing dependencies..."
