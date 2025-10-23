@@ -66,7 +66,8 @@ sudo pacman -S --needed --noconfirm \
 print_status "Installing AUR packages..."
 yay -S --needed --noconfirm \
   wmenu \
-  ttf-jetbrains-mono-nerd
+  ttf-jetbrains-mono-nerd \
+  mangowc-git
 
 # Install Wayland screensharing dependencies
 print_status "Installing Wayland screensharing dependencies..."
