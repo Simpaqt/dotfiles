@@ -13,6 +13,7 @@ set --universal fish_user_paths $HOME/.npm-global/bin $fish_user_paths
 set -g fish_greeting
 set -gx EDITOR nvim
 set -gx PATH ~/.npm-global/bin $PATH
+set -gx PATH ~/go/bin/ $PATH
 
 set -gx XDG_SESSION_TYPE wayland
 set -gx XDG_CURRENT_DESKTOP sway # MangoWC is dwl-like, so sway compat works for portals
@@ -50,6 +51,9 @@ alias dt='/usr/bin/git --git-dir="$HOME/.dotfiles/" --work-tree="$HOME"'
 alias simpvim='NVIM_APPNAME=simpvim nvim'
 alias seh='sesh connect $(sesh list | fzf)'
 alias rn="Rustymemo"
+
+# flatpak alias
+alias haruna="flatpak run org.kde.haruna"
 
 # You may want to remove or adapt these Nix-specific aliases for Arch
 # alias rebuild="sudo nixos-rebuild switch --flake ~/nixos#nixos"
