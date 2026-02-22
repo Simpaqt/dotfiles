@@ -147,4 +147,4 @@ end
 
 # opencode
 fish_add_path /home/dev/.opencode/bin
-mise activate fish | source
+/home/dev/.local/bin/mise activate fish | source
